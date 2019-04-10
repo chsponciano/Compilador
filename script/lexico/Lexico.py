@@ -35,8 +35,6 @@ class Lexico(LexicoConstants):
 		elif token >= 31 and token <= 47:
 			return self.CLASS_LEXEME[6]
 
-		return -1
-
 	def lineToken(self, position):
 		aux = self._input_text[0:position]
 		return len(aux.split("\n"))

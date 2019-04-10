@@ -14,9 +14,13 @@
 			float: left; 
 			background-color: #EEE;
 			cursor: pointer;
+			-webkit-user-select: none;
+    		user-select: none;
 		}
 		.btn-barra-ferramenta label{
 			cursor: pointer;
+			-webkit-user-select: none;
+    		user-select: none;
 		}
 		.btn-barra-ferramenta:hover{
 			background-color: #AAA;
@@ -38,6 +42,8 @@
 			width: -webkit-fill-available;
 			resize: none;
 			overflow:scroll;
+			-webkit-user-select: none;
+    		user-select: none;
 		}
 		.content-status{
 			margin-top: 7px;
@@ -50,11 +56,15 @@
   			display: inline-block;
   			vertical-align: middle;
   			padding-left: 10px;
+			-webkit-user-select: none;
+    		user-select: none;
 		}
 		footer{    
 			position: absolute;
     		bottom: 0px;
     		width: 100%;
+			-webkit-user-select: none;
+    		user-select: none;
 		}
 	</style>
 </head>
@@ -111,6 +121,7 @@
 	<script type="text/javascript">
 		const fs = require("fs");
 		const {dialog} = require("electron").remote;
+		const {PythonShell} = require('python-shell');
 		const {clipboard} = require("electron").remote;
 		const options = {filters: [ { name: 'Text', extensions: ['txt'] } ]};
 		var ehNovo = true;
@@ -226,7 +237,26 @@
 		}
 
 		function compilar() {
-			document.getElementById('area-mensagem').value = "Compilação de programas ainda não foi implementada";
+			var code = document.getElementById('area-codigo-fonte').value;
+
+			if(code.length == 0){
+				document.getElementById('area-mensagem').value = "Nenhum programa para compilar!";
+			}else{
+				let options = {
+					args : [code]
+				};
+
+
+				PythonShell.run('script/lexico/sysLexico.py', options, function (err, results) {
+				  	if (err) throw err;
+					var out = "";
+					console.log(results);
+				  	for (var i = 0; i < results.length; i++) {
+				  		out += results[i] + "\n";
+				  	}
+					document.getElementById('area-mensagem').value = out;
+				});
+			}
 		}
 		
 		function equipe() {

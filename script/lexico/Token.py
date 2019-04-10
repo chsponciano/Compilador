@@ -29,4 +29,4 @@ class Token:
 		self._position = position
 
 	def __repr__(self):
-		return f'{str(self._position).ljust(8)}{self._classLexeme.ljust(20)}{self._lexeme}'
+		return f'{str(self._position).ljust(8)}{str(self._classLexeme).ljust(20)}{self._lexeme}'

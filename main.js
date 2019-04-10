@@ -1,4 +1,5 @@
 const { app, BrowserWindow, dialog } = require('electron')
+const { PythonShell } = require('python-shell')
 
 function createWindow () {
   	// Create the browser window.
