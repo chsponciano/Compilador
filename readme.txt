@@ -1,1 +1,1 @@
-O execut·vel encontra-se na pasta "AppCompiladorV1" arquivo Compilador.exe
+O execut√°vel encontra-se na pasta "AppCompilador" arquivo Compilador.exe
