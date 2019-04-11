@@ -123,6 +123,7 @@
 		const {dialog} = require("electron").remote;
 		const {PythonShell} = require('python-shell');
 		const {clipboard} = require("electron").remote;
+		const path = require("path");
 		const options = {filters: [ { name: 'Text', extensions: ['txt'] } ]};
 		var ehNovo = true;
 		var keypressold;
@@ -246,9 +247,10 @@
 					args : [code]
 				};
 
+				let local = path.resolve(__dirname).split('\\').join('/') + '/script/lexico/sysLexico.py';
 
-				PythonShell.run('script/lexico/sysLexico.py', options, function (err, results) {
-				  	if (err) throw err;
+				PythonShell.run(local, options, function (err, results) {
+				  	if (err) alert(err);
 					var out = "";
 					console.log(results);
 				  	for (var i = 0; i < results.length; i++) {
