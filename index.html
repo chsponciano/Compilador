@@ -121,8 +121,8 @@
 	<script type="text/javascript">
 		const fs = require("fs");
 		const {dialog} = require("electron").remote;
-		const {PythonShell} = require('python-shell');
 		const {clipboard} = require("electron").remote;
+		const child = require('child_process').execFile;
 		const path = require("path");
 		const options = {filters: [ { name: 'Text', extensions: ['txt'] } ]};
 		var ehNovo = true;
@@ -243,19 +243,18 @@
 			if(code.length == 0){
 				document.getElementById('area-mensagem').value = "Nenhum programa para compilar!";
 			}else{
-				let options = {
-					args : [code]
-				};
+				let dir = path.join(__dirname, '/script/lexico/dist/sysLexico/sysLexico.exe');
 
-				let local = path.resolve(__dirname).split('\\').join('/') + '/script/lexico/sysLexico.py';
-
-				PythonShell.run(local, options, function (err, results) {
-				  	if (err) alert(err);
+				child(dir, [code], function(err, results) {
+					if (err) alert(err);
+					
 					var out = "";
 					console.log(results);
-				  	for (var i = 0; i < results.length; i++) {
-				  		out += results[i] + "\n";
-				  	}
+					
+					for (var i = 0; i < results.length; i++) {
+						out += results[i];
+					}
+
 					document.getElementById('area-mensagem').value = out;
 				});
 			}
