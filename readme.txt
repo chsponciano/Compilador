@@ -4,4 +4,4 @@ Versão Parte 1
 Versão Parte 2
 	Possui a implementação do analisador léxico elaborado em Python3
 
-Dentro de cada pasta "AppCompilador" exite um executaável chamado Compilador.exe
+Dentro de cada pasta "AppCompilador" exite um executável chamado Compilador.exe
