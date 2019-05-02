@@ -1,4 +1,4 @@
-Versão Parte 1
+<h1>Versão Parte 1</h1>
 	Possui apenas a interface gráfica elaborada em Electron(NodeJS)
 
 Versão Parte 2
