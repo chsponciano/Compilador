@@ -1,0 +1,14 @@
+{
+  "name": "trabalho",
+  "version": "1.0.0",
+  "description": "Trabalho de Compiladores - FURB",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Carlos Henrique Ponciano da Silva & Vinicius Luis da Silva",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^4.1.0"
+  }
+}
