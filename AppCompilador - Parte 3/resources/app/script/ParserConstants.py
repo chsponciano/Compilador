@@ -202,7 +202,7 @@ class ParserConstants():
                     "esperado tipo",                                                    # "<tipo> invalido",
                     "esperado identificador",                                           # "<lista_de_identificadores> invalido",
                     "esperado module",                                                  # "<especificacoes_modulo> invalido",
-                    "esperado identificador bool char float int string write read ( ^", # "<declaracao_de_variaveis> invalido",
+                    "esperado identificador tipo write read ( ^",                       # "<declaracao_de_variaveis> invalido",
                     "esperado tipo",                                                    # "<variavel> invalido",
                     "esperado identificador read write ( ^",                            # "<lista_de_comandos> invalido",
                     "esperado identificador read write ( ^",                            # "<comando> invalido",

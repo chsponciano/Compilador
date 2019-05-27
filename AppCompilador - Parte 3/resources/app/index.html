@@ -276,6 +276,17 @@
 			autoResize();
 		});
 
+		document.getElementById('area-codigo-fonte').addEventListener('keydown', function(e) {
+			if(e.keyCode === 9) {
+				e.target.value = e.target.value.substring(0, this.selectionStart)
+								+ '\t'
+								+ e.target.value.substring(this.selectionEnd);
+				this.selectionStart = this.selectionStart + 1;
+				this.selectionEnd = this.selectionStart + 1;
+				e.preventDefault();
+			}
+		}, false);
+
 		window.addEventListener("keydown", function(event) {
 			//ctrl+n - 17+78
 			if(keypressold == 17 && event.keyCode == 78){
