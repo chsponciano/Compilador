@@ -1,0 +1,185 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = String
+Parser = LL
+#RegularDefinitions
+mai : [A-Z]
+min : [a-z]
+digito : [0-9]
+nz : [1-9]
+un : _
+valido_id : ({digito} | {min} | {un})
+p : \.
+valido_string : [^\"\n\\]
+aspas : \"
+barra_inv : \\
+valido_com_lin : [^\n]
+inicio : #\|
+final : \|#
+valido_com_blo : ([^#\|] ((#+ | \|)? [^#\|])*)
+#Tokens
+//identificador
+identificador: (({mai} (({valido_id}+ {mai}) | {valido_id}*)*) | ({min} (({mai} {valido_id}+) | {valido_id}*)* {mai}?))
+
+//constante inteira
+cons_inteira: (0 | {nz} {digito}*)
+
+//constante real
+cons_real: (( 0 | {nz} {digito}*) {p} (0 | {digito}* {nz}))
+
+//constante literal
+cons_string: ({aspas} {valido_string}* {aspas})
+
+//constante caracter
+cons_caracter: ({barra_inv} (s | n | t))
+
+//comentario de linha 
+:! \? {valido_com_lin}* \n?
+
+//comentario de bloco 
+:! {inicio} {valido_com_blo} {final}
+
+//palavras reservadas
+and = identificador : "and"
+begin = identificador : "begin"
+bool = identificador : "bool" 
+char = identificador : "char"
+end = identificador : "end"
+false = identificador : "false"
+float = identificador : "float"
+forward = identificador : "forward"
+iffalsedo = identificador : "ifFalseDo"
+iftruedo = identificador : "ifTrueDo"
+int = identificador : "int"
+main = identificador : "main"
+module = identificador : "module"
+not = identificador : "not"
+or = identificador : "or"
+read = identificador : "read"
+string = identificador : "string"
+true = identificador : "true"
+void = identificador : "void"
+whilefalsedo = identificador : "whileFalseDo"
+whiletruedo = identificador : "whileTrueDo"
+write = identificador : "write"
+
+
+//simbolos especiais
+"("
+")"
+"=="
+"!="
+"<"
+"<="
+">"
+">="
+"+="
+"-="
+"+"
+"-"
+"*"
+"/"
+","
+"."
+";"
+":"
+"="
+"^"
+
+//caracteres de formatacao
+:[\s\n\t]
+#NonTerminals
+<programa>
+<declaracao>
+<modulo>
+<corpo>
+<especificacoes_declaracao>
+<tipo_modulo> 
+<parametros_formais> 
+<parametros> 
+<lista_de_parametros>
+<tipo> 
+<lista_de_identificadores> 
+<especificacoes_modulo> 
+<declaracao_de_variaveis>
+<variavel>
+<lista_de_comandos>
+<comando>
+<comando_atribuicao>
+<operador_de_atribuicao>
+<comando_entrada>
+<comando_saida>
+<lista_de_expressoes>
+<comando_selecao>
+<selecao_opcional>
+<comando_repeticao>
+<tipo_de_repeticao>
+<comando_retorno>
+<expressao>
+<expressao_I>
+<elemento>
+<relacional>
+<operador_relacional>
+<aritmetica>
+<aritmetica_I>
+<termo>
+<termo_I>
+<fator>
+<lista_de_identificadores_I>
+<lista_de_comandos_I> 
+<relacional_I>
+<fator_I>
+<fator_II>
+<lista_de_expressoes_I>
+<comando_dirigido> 
+#Grammar
+<programa> ::= #15 main <declaracao> <modulo> #16 begin <corpo> end #17;
+<declaracao> ::= î | <especificacoes_declaracao> <declaracao>;
+<especificacoes_declaracao> ::= forward module <tipo_modulo> identificador "(" <parametros_formais> ")";
+<tipo_modulo> ::= int | float | bool | char | string | void;
+<parametros_formais> ::= î | <parametros> <lista_de_parametros>; 
+<lista_de_parametros> ::= î | ";" <parametros> <lista_de_parametros>;
+<parametros> ::= <tipo> ":" <lista_de_identificadores>;
+<tipo> ::= int | float | bool | char | string;
+<lista_de_identificadores> ::= identificador #32 <lista_de_identificadores_I>;
+<lista_de_identificadores_I> ::= "," <lista_de_identificadores> | î;
+<modulo> ::= î | <especificacoes_modulo> <modulo>;
+<especificacoes_modulo> ::= module identificador begin <corpo> end;
+<corpo> ::= <declaracao_de_variaveis> <lista_de_comandos>;
+<declaracao_de_variaveis> ::= î | <variavel> <declaracao_de_variaveis>;
+<variavel> ::= <tipo> #30 ":" <lista_de_identificadores> #31 ".";
+<lista_de_comandos> ::= <comando> "." <lista_de_comandos_I>;
+<lista_de_comandos_I> ::= <lista_de_comandos> | î;
+<comando> ::= <comando_atribuicao> | <comando_entrada> | <comando_saida> | #37 "(" <expressao> ")" <comando_dirigido> | <comando_retorno>;
+<comando_dirigido> ::= <comando_selecao> | <comando_repeticao>;
+<comando_atribuicao> ::= identificador #32 <operador_de_atribuicao> #36 <expressao> #34;
+<operador_de_atribuicao> ::= "=" | "+=" | "-=";
+<comando_entrada> ::= read "(" <lista_de_identificadores> #35 ")";
+<comando_saida> ::= write "(" <lista_de_expressoes> ")";
+<lista_de_expressoes> ::= <expressao> #14 <lista_de_expressoes_I>;
+<lista_de_expressoes_I> ::= "," <lista_de_expressoes> | î;
+<comando_selecao> ::= iftruedo #38 <lista_de_comandos> <selecao_opcional> end #39;
+<selecao_opcional> ::= #40 iffalsedo <lista_de_comandos> | î;
+<comando_repeticao> ::= <tipo_de_repeticao> #41 <lista_de_comandos> end #42;
+<tipo_de_repeticao> ::= whiletruedo | whilefalsedo;
+<comando_retorno> ::= "^" <expressao>;
+<expressao> ::= <elemento> <expressao_I>;
+<expressao_I> ::= and <elemento> #18 <expressao_I>  | or <elemento> #19 <expressao_I> | î;
+<elemento> ::= <relacional> | true #11 | false #12 | not <elemento> #13;
+<relacional> ::= <aritmetica> <relacional_I>;
+<relacional_I> ::= <operador_relacional> #9 <aritmetica> #10 | î;
+<operador_relacional> ::= "==" | "!=" | "<" | "<=" | ">" | ">=";
+<aritmetica> ::= <termo> <aritmetica_I>;
+<aritmetica_I> ::= "+" <termo> #1 <aritmetica_I> | "-" <termo> #2 <aritmetica_I> | î;
+<termo> ::= <fator> <termo_I>;
+<termo_I> ::= "*" <fator> #3 <termo_I> | "/" <fator> #4 <termo_I> | î;
+<fator> ::= identificador #33 <fator_I> | cons_inteira #5 | cons_real #6 | cons_string #21 | cons_caracter #20 | "(" <expressao> ")" | "+" <fator> #7 | "-" <fator> #8;
+<fator_I> ::= "(" <fator_II> ")" | î;
+<fator_II> ::= <lista_de_expressoes> | î;
