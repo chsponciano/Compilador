@@ -1,0 +1,8 @@
+main begin
+	int: lado.
+
+	write ("digite um valor para o lado: )
+	read (lado).
+	area = lado * lado.
+	write (area).
+end
